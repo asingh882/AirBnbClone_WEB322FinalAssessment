@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        * {
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+}
+
+body {
+    font-family:"Roboto";
+    background-color:#ffffff;
+}
+header {
+    text-align:center;
+    margin:40px 0px;
+}
+
+#hero-section{
+    margin-top: 3px;
+    background-color: rgb(185, 184, 184);
+}
+
+#logo{
+    height: 90px;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+
+.menu{
+    display: flex;
+    align-items: center;
+}
+
+.menu-item{
+    display: flex;
+    position: relative;
+}
+
+#host{
+    vertical-align: center;
+    margin-left: 1100px;
+}
+
+button{
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+#language{
+    height: 20px;
+    margin-left: 20px;
+    color: black;
+}
+
+#login{
+    border: 0;
+    margin-left: 20px;
+    padding-top:10px;
+    padding-bottom:10px;   
+    padding-left:13px;
+    padding-right:13px;
+    background-color:black;
+    color:white;
+    border-radius: 20px;
+    font-size:15px;
+    font-weight: bold;
+}
+
+#room-list{
+    margin-top: 7px;
+    background-color: rgb(189, 169, 123);
+}
+
+.info{
+    display: flex;
+    padding-top: 10px;
+}
+
+.list-item{
+    display: block;
+    padding: 10px ;
+}
+
+.room-image{
+    height: 80%;
+    width: 80%;
+}
+
+.room-title{
+    font-size: 20px;
+    margin-top: 100px;
+    margin-left: 60px;
+    align-items: center;
+}
+
+.room-price{
+    font-size: 15px;
+    display: block;
+    margin-left: 80px;
+    align-items: center;
+}
+
+.footer{
+    display: flex;
+}
+
+#footer-title{
+    margin-left: 50px;
+    font-size: larger;
+}
+
+.footer-item{
+    display: block;
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+.social-media{
+    height: 40px;
+}
+
+
+    </style>
+</head>
+<body>
+    
+    <section id="hero-section">
+        <nav>
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="/">
+                        <img src="assests/room-assets/logo.png" id="logo">    
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" id="host"><b>Become a host</b></a>
+                </li>
+                <li class="menu-item">
+                    <button><img src="assests/language.png" id="language"></button>
+                </li>
+                <li class="menu-item">
+                    <button onclick="location.href='/sign-up'" id="login">Sign up</button>                    
+                </li>
+            </ul>
+        </nav>
+    </section>
+
+    <section id="room-list">
+        <div class="info">
+            <div class="list-item">
+                <img src="assests/room-assets/room1.png" class="room-image">
+                <span class="room-title">Bluebird Farm CT. Treehouse</span>
+                <span class="room-price">$506/night</span>
+            </div>
+        
+            <div class="list-item">
+                <img src="assests/room-assets/room2.png" class="room-image">
+                <span class="room-title">Live-Laugh-Love In Islamorada</span>
+                <span class="room-price">$289/night</span>
+            </div>
+        
+            <div class="list-item">
+                <img src="assests/room-assets/room3.png" class="room-image">
+                <span class="room-title">Cozy Tiny House Cabin in Burlington</span>
+                <span class="room-price">$210/night</span>
+            </div>
+        </div>
+        <div class="info">
+            <div class="list-item">
+                <img src="assests/room-assets/room4.png" class="room-image">
+                <span class="room-title">Rocket City's Original Space Dome</span>
+                <span class="room-price">$1016/night</span>
+            </div>
+        
+            <div class="list-item">
+                <img src="assests/room-assets/room5.png" class="room-image">
+                <span class="room-title">Daisy- the BEST location in Floyd, VA!</span>
+                <span class="room-price">$94/night</span>
+            </div>
+            <div class="list-item">
+                <img src="assests/room-assets/room6.png" class="room-image">
+                <span class="room-title">Private Island in the 1000 Islands</span>
+                <span class="room-price">$306/night</span>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-title">
+        Social Media links
+    </div>
+    <section class="footer">
+
+        <div class="footer-item">
+            <button onclick="location.href='https://www.facebook.com/airbnb'"><img src="assests/facebook.png" class="social-media"> </button> 
+        </div>
+        <div class="footer-item">
+            <button onclick="location.href='https://twitter.com/airbnb'"><img src="assests/twitter.png" class="social-media"></button>
+        </div>
+        <div class="footer-item">
+            <button onclick="location.href='https://www.instagram.com/airbnb/'"><img src="assests/instagram.png" class="social-media"></button>
+        </div>
+    </section>
+</body>
