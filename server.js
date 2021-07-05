@@ -47,7 +47,7 @@ var transporter = nodemailer.createTransport({
     from: 'pal121640@gmail.com',
     to: address,
     subject: 'Welcome to AirBnb',
-    text: 'Hello '+ name + 'Welcome to AirBnb.ca'
+    text: 'Hello '+ name + ', Welcome to AirBnb.ca'
   };
   
   transporter.sendMail(mailOptions, (error, info) => {
