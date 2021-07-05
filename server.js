@@ -4,7 +4,7 @@ const path=require("path");
 const bodyParser = require("body-parser");
 var nodemailer = require("nodemailer"); 
 
-const HTTP_PORT = process.env.HTTP_PORT || 8080;
+const PORT = process.env.PORT || 8080;
 
 function onHttpStart(){
     console.log("Express HTTP server listening on: " + HTTP_PORT);
