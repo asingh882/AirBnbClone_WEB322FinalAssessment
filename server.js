@@ -29,7 +29,7 @@ let address = "johnlewis3310@gmail.com";
 let name = "new";
 app.post("/register-user", (req, res) => {
     address = req.body.email;
-    name = req.body.firstName + ' ' + req.body.lastName;
+    name = req.body.firstName + ' ' +  req.body.lastName;
     res.sendFile(path.join(__dirname, "/dashboard.html"));
     sendM();
 });
