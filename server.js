@@ -7,7 +7,7 @@ var nodemailer = require("nodemailer");
 const PORT = process.env.PORT || 8080;
 
 function onHttpStart(){
-    console.log("Express HTTP server listening on: " + HTTP_PORT);
+    console.log("Express HTTP server listening on: " + PORT);
 }
 
 app.use(express.static("./"));
@@ -58,4 +58,4 @@ var transporter = nodemailer.createTransport({
   });
 }
 
-app.listen(HTTP_PORT, onHttpStart);
+app.listen(PORT, onHttpStart);
