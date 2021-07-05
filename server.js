@@ -26,9 +26,10 @@ app.get("/sign-up", (req, res) => {
 });
 
 let address = "johnlewis3310@gmail.com";
-
+let name = "new";
 app.post("/register-user", (req, res) => {
     address = req.body.email;
+    name = req.body.fname + req.body.lname;
     res.sendFile(path.join(__dirname, "/dashboard.html"));
     sendM();
 });
@@ -46,7 +47,7 @@ var transporter = nodemailer.createTransport({
     from: 'pal121640@gmail.com',
     to: address,
     subject: 'Welcome to AirBnb',
-    text: 'Welcome to AirBnb.ca'
+    text: 'Hello '+ name + 'Welcome to AirBnb.ca'
   };
   
   transporter.sendMail(mailOptions, (error, info) => {
