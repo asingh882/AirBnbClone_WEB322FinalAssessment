@@ -7,8 +7,12 @@ const app=express();
 const path=require("path");
 const bodyParser = require("body-parser");
 var nodemailer = require("nodemailer"); 
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
 
 const PORT = process.env.PORT || 8080;
+
+mongoose.connect("mongodb+srv://webAssign:<web311assignment>@logininfo.bhe5t.mongodb.net/UserInfo?retryWrites=true&w=majority");
 
 function onHttpStart(){
     console.log("Express HTTP server listening on: " + PORT);
@@ -31,12 +35,15 @@ app.get("/sign-up", (req, res) => {
 
 let address = "johnlewis3310@gmail.com";
 let name = "new";
+
 app.post("/register-user", (req, res) => {
     address = req.body.email;
     name = req.body.firstName + ' ' +  req.body.lastName;
     res.sendFile(path.join(__dirname, "/dashboard.html"));
+    //addData(req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.dob);
     sendM();
 });
+
 
 function sendM(){
 var transporter = nodemailer.createTransport({
@@ -44,6 +51,7 @@ var transporter = nodemailer.createTransport({
     auth: {
       user: 'pal121640@gmail.com',
       pass: 'cxroaedqimsfyagj'
+      
     }
   });
   
@@ -61,6 +69,42 @@ var transporter = nodemailer.createTransport({
       console.log('Email sent to: ' + address);
     }
   });
+}
+
+
+
+
+function addData(firstN, lastN, eAddress, password, dateOfBirth)
+{
+  mongoose.connect("mongodb+srv://webAssign:<web311assignment>@logininfo.bhe5t.mongodb.net/UserInfo?retryWrites=true&w=majority");
+  
+  var userInfo = new Schema({
+    "email" : String,
+    "fname" : String,
+    "lname" : String,
+    "pass" : String,
+    "dob" : Date
+  });
+
+  var user = mongoose.model("new_user", userInfo);
+      var newUser = new user({
+        email: eAddress,
+        fname: firstN,
+        lname: lastN,
+        pass: password,
+        dob: dateOfBirth
+      });
+
+    newUser.save((err) => {
+      if(err) {
+        console.log("An unknown error occured!");
+      }
+      else {
+        console.log("A new user has been saved to the database!");
+      }
+
+      process.exit();
+    });
 }
 
 app.listen(PORT, onHttpStart);

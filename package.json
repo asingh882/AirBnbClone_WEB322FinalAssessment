@@ -1,12 +1,13 @@
 {
   "name": "assignment",
   "version": "1.0.0",
-  "description": "",
+  "description": "��#\u0000 \u0000a\u0000s\u0000s\u0000i\u0000g\u0000n\u0000m\u0000e\u0000n\u0000t\u00002\u0000\r\u0000 \u0000",
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "nodemailer": "^6.6.2",
+    "mongoose": "^5.13.3",
+    "nodemailer": "^6.6.3",
     "path": "^0.12.7"
   },
   "devDependencies": {},
@@ -15,5 +16,13 @@
     "start": "node server.js"
   },
   "author": "Amrit",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Amrit281/assignment2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Amrit281/assignment2/issues"
+  },
+  "homepage": "https://github.com/Amrit281/assignment2#readme"
 }
