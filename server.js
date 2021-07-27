@@ -40,7 +40,7 @@ app.post("/register-user", (req, res) => {
     address = req.body.email;
     name = req.body.firstName + ' ' +  req.body.lastName;
     res.sendFile(path.join(__dirname, "/dashboard.html"));
-    //addData(req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.dob);
+    addData(req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.dob);
     sendM();
 });
 
@@ -51,7 +51,7 @@ var transporter = nodemailer.createTransport({
     auth: {
       user: 'pal121640@gmail.com',
       pass: 'cxroaedqimsfyagj'
-      
+
     }
   });
   
@@ -103,7 +103,7 @@ function addData(firstN, lastN, eAddress, password, dateOfBirth)
         console.log("A new user has been saved to the database!");
       }
 
-      process.exit();
+      //process.exit();
     });
 }
 
