@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        * {
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+}
+
+body {
+    font-family:"Roboto";
+    background-color:#ffffff;
+}
+header {
+    text-align:center;
+    margin:40px 0px;
+}
+
+#hero-section{
+    background-image: url("assests/background2.png");  
+    height: 100vh;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 100% 90%;
+    position: relative;
+}
+
+
+div{
+    display: block;
+}
+
+nav{
+    height: 0px;
+    padding-top: 20px 
+}
+
+#hero-section{
+    padding-top: 30px;
+}
+
+#logo{
+    position: relative;
+    margin-top: 20px;
+    margin-left: 60px;
+    height: 40px;
+}
+
+.language{
+    height: 20px;
+    color: white;
+}
+
+.menu{
+    list-style-type: none;
+    display: inline;
+    margin: 45vh;
+}
+
+.menu-item{
+   display:inline;
+   
+   margin-left:10px;
+   margin-right:10px;
+    
+}
+
+.menu-extra{
+    display: inline;
+
+    margin-left:10px;
+    margin-right:10px;
+}
+button{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+}
+
+
+#login{
+    border: 0;
+   padding-top:10px;
+   padding-bottom:10px;   
+   padding-left:13px;
+   padding-right:13px;
+   background-color:white;
+   color:black;
+   border-radius: 20px;
+   font-size:15px;
+   font-weight: bold;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+    color:#aaaaaa;
+}
+
+
+#login:hover{
+    background-color: #aaaaaa;
+    font-size: 17px;
+}
+
+.top{
+    padding-top: 40px;
+}
+
+
+
+.search-bar{
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 32px;
+    color: rgb(34, 34, 34);
+    display: flex;
+    height: 66px;
+    position: relative;
+    width: 100%;
+    box-shadow: rgb(0 0 0 / 15%) 0px 16px 32px, rgb(0 0 0 / 10%) 0px 3px 8px  ;
+    background-color: white;
+    flex: 1 1 0%;
+    height: 100%;
+    min-width: 0px;
+    pointer-events: auto;
+    margin-top: 90px;
+    margin: 11vh auto;
+    max-width: 850px;
+
+}
+
+#search-bar{
+    padding: 15px 30px;
+    margin: 1px;
+    border: 0;
+    width: auto;
+    position: relative;
+    background-color:white;
+    color:black;
+    width: 100%;
+    border-radius: 40px;
+}
+
+
+.search-item{
+    display: inline-block;
+
+    padding: 5px 30px;
+    margin: 1px;
+    border: 0;
+    width: auto;
+    position: relative;
+    background-color:white;
+    color:black;
+    border-radius: 40px;  
+}
+
+.search-item:hover{
+    background-color:rgb(179, 179, 179);
+}
+
+#search-button{
+    display: inline-block;
+    height: 50px;
+    padding: 10px;
+    vertical-align: middle;
+    margin: 1px;
+    background-color: rgb(228, 42, 83);
+    border: 0;
+    border-radius: 25px;
+}
+
+#search-button:hover{
+    background-color: rgb(165, 27, 57);
+}
+
+.search{
+    display: inline-block;
+
+    margin-left: 20px;
+    margin-right: auto;
+    
+}
+
+.input-name{
+    flex: 1 0 0%;
+    display: block;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 2px;
+}
+
+.input-val{
+    display: block;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    background: none;
+    font-size: 14px;
+    line-height: 18px;
+    color: #222222;
+}
+
+.allign:hover{
+    background-color: rgb(190, 40, 72);
+    border: 0;
+    border-radius: 25px;
+} 
+
+#end-part{
+    font-size: 13px;
+    font-weight: 800;
+    margin-top: 200px; 
+    margin-left: 600px;
+    margin-right: 500px;
+}
+
+#next-page{
+    position: relative;
+    text-align: center;
+    top: 60%;
+    left: 25%;
+    border-radius: 8px;
+    font-size: 21px;
+    margin-top: 10px;
+    margin-left: -70px;
+    background-color: white;
+    border: 0;
+    border-radius: 30px;
+    font-size: 20px;
+    padding: 20px 50px;
+    box-shadow: 1px 2px #888888;
+}
+
+#next-page:hover{
+    background-color: #aaaaaa;
+}
+
+
+.footer{
+    display: flex;
+}
+
+#footer-title{
+    margin-left: 50px;
+    font-size: larger;
+}
+
+.footer-item{
+    display: block;
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
+.social-media{
+    height: 40px;
+}
+
+#welcome-msg{
+    color:  rgb(228, 42, 83);
+    font-size: 40px;
+    margin-top: 10vh;
+    margin-left: 5vh;
+}
+
+.name{
+    color: white;
+}
+
+
+    </style>
+</head>
+<body>
+    <section id="hero-section">
+        <nav>
+            <img src="assests/logo.png" id="logo">    
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="#">Places to stay</a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">Experiences</a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">Online&nbspexperiences</a>
+                </li>
+            </ul>
+            <ul class="menu-extra">
+                <li class="menu-item">
+                    <span class="name">{{user.firstName}}&nbsp{{user.lastName}}&nbsp</span>
+                </li>
+                <li class="menu-item">
+                    <button onclick="location.href='/logout'" id="login">Logout</button>                    
+                </li>
+            </ul>
+        </nav>
+        <div>
+            <form class="search-bar">
+                <div class="search-item">
+                    <label class="input-name">Location</label>
+                    <input class="input-val" type="text" placeholder="Where are you going?">
+                </div>
+                <div class="search-item">
+                    <label class="input-name">Check-in</label>
+                    <input class="input-val" type="date" placeholder="Add Dates">
+                </div>
+                <div class="search-item">
+                    <label class="input-name">Check-out</label>
+                    <input class="input-val" type="date" placeholder="Add Dates">
+                </div>
+                <div class="search-item">
+                    <label class="input-name">Guests</label>
+                    <select name="guests" class="input-val">
+                        <option value="1 guests">1 guests</option>
+                        <option value="2 guests">2 guests</option>
+                        <option value="3 guests">3 guests</option>
+                        <option value="4 guests">4 guests</option>
+                    </select>
+                </div>
+                <li class="search">
+                    <button class="allign"><img id="search-button" src="assests/search.png"></button>    
+                </li>
+            </form>
+        </nav>
+
+        <div id="end-part">
+            <h1>Not sure where to go?Perfect.</h1>
+            <button onclick="location.href='/room-list'" id="next-page">I'm flexible</button>    
+        </div>
+    </section>
+
+    <div id="footer-title">
+        Social Media links
+    </div>
+    <section class="footer">
+
+        <div class="footer-item">
+            <button onclick="location.href='https://www.facebook.com/airbnb'"><img src="assests/facebook.png" class="social-media"> </button> 
+        </div>
+        <div class="footer-item">
+            <button onclick="location.href='https://twitter.com/airbnb'"><img src="assests/twitter.png" class="social-media"></button>
+        </div>
+        <div class="footer-item">
+            <button onclick="location.href='https://www.instagram.com/airbnb/'"><img src="assests/instagram.png" class="social-media"></button>
+        </div>
+    </section>
+
+</body>
