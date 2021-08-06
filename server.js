@@ -240,7 +240,7 @@ app.post("/register-admin", (req, res) => {
               if(!doc)
               {
                   res.redirect("/admin-login");
-                  addAdmin(req.body.username, req.body.firstName, req.body.lastName, req.body.email, req.body.number, req.body.passord, req.body.dob);
+                  addAdmin(req.body.username, req.body.firstName, req.body.lastName, req.body.email, req.body.number, req.body.password, req.body.dob);
                   sendM(req.body.email, name, true);
                 
               }
@@ -305,10 +305,9 @@ var transporter = nodemailer.createTransport({
 
 //Database function
 
-function addData(userN, firstN, lastN, eAddress, password, dateOfBirth)
+function addData(firstN, lastN, eAddress, password, dateOfBirth)
 {
       var newUser = new user({
-        username: userN,
         email: eAddress,
         fname: firstN,
         lname: lastN,
