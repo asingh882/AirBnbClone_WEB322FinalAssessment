@@ -305,10 +305,10 @@ var transporter = nodemailer.createTransport({
 
 //Database function
 
-function addData(user, firstN, lastN, eAddress, password, dateOfBirth)
+function addData(userN, firstN, lastN, eAddress, password, dateOfBirth)
 {
       var newUser = new user({
-        username: user,
+        username: userN,
         email: eAddress,
         fname: firstN,
         lname: lastN,
