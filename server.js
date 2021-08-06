@@ -199,7 +199,7 @@ app.get("/sign-up-admin", (req, res) => {
 
 app.post("/register-user", (req, res) => {
     let name = req.body.firstName + ' ' +  req.body.lastName;
-    admin.findOne({email: req.body.email}, (err, doc) => {
+    user.findOne({email: req.body.email}, (err, doc) => {
       if(err)
       {
         throw err;
