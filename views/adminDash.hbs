@@ -291,9 +291,13 @@ a:hover{
 }
 
 
+
     </style>
 </head>
 <body>
+    {{#if errorMsg}}
+        <span class="msg">{{msg}}</span>
+    {{/if}}
     <section id="hero-section">
         <nav>
             <img src="assests/logo.png" id="logo">    
@@ -302,7 +306,7 @@ a:hover{
                     <a href="#">Create new list</a>
                 </li>
                 <li class="menu-item">
-                    <a href="#">View all listings</a>
+                    <a href="/admin-room-list">View all listings</a>
                 </li>
                 <li class="menu-item">
                     <a href="#">Manage Lists</a>
@@ -318,27 +322,28 @@ a:hover{
             </ul>
         </nav>
         <div>
-            <form class="search-bar" method="POST" action="/enterRoom">
+            <form class="search-bar" method="POST" enctype="multipart/form-data" action="/room-enter">
                 <div class="search-item">
                     <label class="input-name">Location</label>
-                    <input class="input-val" type="text" name="location" placeholder="Where it is located?">
-                </div>
-                <div class="search-item">
-                    <label class="input-name">Max Days</label>
-                    <select name="days" class="input-val" id="days">
-                        <option value="1 Days">5 Days</option>
-                        <option value="2 Days">7 Days</option>
-                        <option value="3 Days">10 Days</option>
-                        <option value="4 Days">15 Days</option>
+                    <select name="location" class="input-val" id="days">
+                        <option value="QC">Quebec</option>
+                        <option value="BC">British Columbia</option>
+                        <option value="NB">New Brunswick</option>
+                        <option value="ON">Ontario</option>
+                        <option value="AB">Alberta</option>
                     </select>
                 </div>
                 <div class="search-item">
-                    <label class="input-name">Availablilty</label>
-                    <input class="input-val" type="date" name="availablity" placeholder="Add Dates">
+                    <label class="input-name">Room Title</label>
+                    <input class="input-val" type="text" name="title" placeholder="Title">
                 </div>
                 <div class="search-item">
-                    <label class="input-name">Room Images</label>
-                    <input class="input-val" type="file" name="image" placeholder="Add Dates">
+                    <label class="input-name">Price</label>
+                    <input class="input-val" type="text" name="price" placeholder="$$$$">
+                </div>
+                <div class="search-item">
+                    <label class="input-name">Room Image</label>
+                    <input class="input-val" type="file" name="image"/>
                 </div>
                 <li class="search">
                     <button class="allign"><img id="search-button" src="../assests/adminDash/submit.png"></button>    
@@ -347,8 +352,8 @@ a:hover{
         </nav>
 
         <div id="end-part">
-            <h1>New to Hosting?</h1>
-            <button onclick="location.href='#'" id="next-page">Assistance</button>    
+            <h1>Advance room Creating.</h1>
+            <button onclick="location.href='/create-room'" id="next-page">Create Room</button>    
         </div>
     </section>
 

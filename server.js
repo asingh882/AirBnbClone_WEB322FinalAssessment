@@ -4,6 +4,8 @@
 
 const express=require("express");
 const app=express();
+var multer = require("multer");
+
 const path=require("path");
 const bodyParser = require("body-parser");
 var nodemailer = require("nodemailer"); 
@@ -12,6 +14,10 @@ var Schema = mongoose.Schema;
 const exphbs = require("express-handlebars");
 const clientSessions = require("client-sessions");
 const bcrypt = require("bcryptjs");
+const fileUpload = require('express-fileupload');
+const { resolveSoa } = require("dns");
+const { domainToASCII } = require("url");
+const { json } = require("body-parser");
 
 const SALT_WORK_FACTOR = 10;
 
@@ -31,6 +37,26 @@ app.use(clientSessions({
 
 app.use(express.urlencoded({ extended: false }));
 
+app.use(express.static("./"));
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(fileUpload());
+
+
+
+var Storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, __dirname+"/uploads/")
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname +"_"+Date.now()+path.extname(file.originalname))
+    }
+});
+
+
+var upload = multer({
+  storage: Storage
+})
 
 //Database
 
@@ -55,9 +81,24 @@ var adminInfo = new Schema({
     "dob": Date
 });
 
+var roomInfo = new Schema({
+    "username": String,
+    "title": String,
+    "description": String,
+    "price": String,
+    "location": String,
+    "image": 
+    {
+        "data": Buffer,
+        "name": String 
+    }
+});
+
 var admin = mongoose.model("Admin", adminInfo);
 
 var user = mongoose.model("UserInfo", userInfo);
+
+var room = mongoose.model("Room", roomInfo);
 
 //Routes
 
@@ -65,15 +106,40 @@ function onHttpStart(){
     console.log("Express HTTP server listening on: " + PORT);
 }
 
-app.use(express.static("./"));
-app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "/index.html"));
 });
 
 app.get("/room-list", (req, res) => {
-    res.sendFile(path.join(__dirname, "/room-list.html"));
+    
+  room.find({}, (err, docs) => {
+    if(err)
+    {
+      console.log(`An unknown error occured!`);
+    }
+    else
+    {
+      docs = docs.map(value => value.toObject());
+      res.render("room-list", { rooms: docs, layout: false });
+    }
+  });
+});
+
+
+
+app.get("/admin-room-list", (req, res) => {
+    var userN = req.session.admin.username;
+    room.find({ username: userN }, (err, docs) => {
+        if(err)
+        {
+          console.log(`An error occured!`);
+        }
+        else{
+            docs = docs.map(value => value.toObject());
+            res.render("admin-rooms", {rooms: docs, user: req.session.admin, layout: false});
+        }
+    });
 });
 
 app.get("/sign-up", (req, res) => {
@@ -86,6 +152,10 @@ app.get("/sign-in", (req, res) => {
 
 app.get("/admin-login", (req, res) => {
   res.render("adminLogin", { layout: false });
+})
+
+app.get("/create-room", ensureAdmin, (req, res) => {
+    res.render("createRoom", { layout: false });
 })
 
 
@@ -115,6 +185,7 @@ app.post("/login-admin", (req, res) => {
         else
         {
             req.session.admin = {
+              username: doc.username,
               firstName: doc.fname,
               lastName: doc.lname
             }
@@ -261,6 +332,44 @@ app.post("/register-admin", (req, res) => {
     });
 });
 
+app.post("/room-enter", (req, res, next) => {
+
+//  var imageFile=req.files.filename;
+
+  const desc = "New Room";
+  var obj = {
+    userN: req.session.admin.username,
+    rTitle: req.body.title,
+    rDescription: desc,
+    rLocation: req.body.location,
+    rPrice: req.body.price,
+    image: req.files.image
+  };
+
+  addRoom(obj.userN, obj.rTitle, obj.rDescription, obj.rLocation, obj.rPrice, obj.image);
+  res.render("adminDash", { msg: "Room has been added to the list! To add description Go to Manage Lists", user: req.session.admin , layout: false} );
+});
+
+app.post("/create-room", (req, res) => {
+
+  //  var imageFile=req.files.filename;
+  
+    var obj = {
+      userN: req.session.admin.username,
+      rTitle: req.body.Title,
+      rDescription: req.body.Description,
+      rLocation: req.body.Location,
+      rPrice: req.body.Price,
+      image: req.files.image
+    };
+    
+  
+    addRoom(obj.userN, obj.rTitle, obj.rDescription, obj.rLocation, obj.rPrice, obj.image);
+    res.render("adminDash", { msg: "Room has been added to the list! To add description Go to Manage Lists", user: req.session.admin , layout: false} );
+ 
+  });
+
+
 //email function
 
 function sendM(address, name, isAdmin){
@@ -335,7 +444,7 @@ function addAdmin( user, firstN, lastN, eAddress, mobile, password, dateOfBirth)
         fname: firstN,
         lname: lastN,
         pass: password,
-        dob: dateOfBirth
+        dob: dateOfBirth,
       });
 
     newAdmin.save((error) => {
@@ -343,8 +452,28 @@ function addAdmin( user, firstN, lastN, eAddress, mobile, password, dateOfBirth)
         console.log(`An unknown error occured! ${error}` );
       }
       else {
-        console.log("A new user has been saved to the database!");
+        console.log("New admin has been saved to the database!");
       }
+    });
+}
+
+function addRoom(userN, rTitle, rDescription, rLocation, rPrice, rImage)
+{
+    var newRoom = new room({
+      username: userN,
+      title: rTitle,
+      description: rDescription,
+      location: rLocation,
+      price: rPrice,
+      image: rImage
+    });
+
+    newRoom.save((error) => {
+        if(error)
+          console.log(`An unknown error occured! ${error}`);
+        else{
+            console.log(`New room has been added to the database!`);
+        }
     });
 }
 

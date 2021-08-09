@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        * {
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+}
+
+body {
+    font-family:"Roboto";
+    background-color:#ffffff;
+}
+header {
+    text-align:center;
+    margin:40px 0px;
+}
+
+#hero-section{
+    margin-top: 3px;
+    background-color: rgb(185, 184, 184);
+}
+
+#logo{
+    height: 90px;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+
+.menu{
+    display: inline;
+    align-items: center;
+    margin: 45vh;
+}
+
+.menu-extra{
+    display: inline;
+
+    margin-left:10px;
+    margin-right:10px;
+}
+
+.menu-item{
+    display: inline;
+    position: relative;
+}
+
+#host{
+    vertical-align: center;
+    margin-left: 1100px;
+}
+
+button{
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+#language{
+    height: 20px;
+    margin-left: 20px;
+    color: black;
+}
+
+#login{
+    border: 0;
+    margin-left: 20px;
+    padding-top:10px;
+    padding-bottom:10px;   
+    padding-left:13px;
+    padding-right:13px;
+    background-color:black;
+    color:white;
+    border-radius: 20px;
+    font-size:15px;
+    font-weight: bold;
+}
+
+#room-list{
+    width:70vw;
+    margin:0 auto;
+    text-align:center;
+}
+
+div.video {    
+    display:grid;
+    grid-template-columns: 400px auto;
+    grid-column-gap: 20px;
+    padding:20px;
+    margin:20px 0px;
+    background-color:#fff;
+    text-align:left;
+}
+
+/* Video thumbnail */
+img.thumbnail {
+    max-width:400px;
+}
+
+p.name {
+    font-size:20px;    
+}
+p.name a {
+    color:rgb(22, 1, 116);
+    text-decoration:none;
+}
+
+p.stats {
+    font-size:14px;    
+
+}
+
+p.creator {
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    margin-top:15px;
+}
+
+
+.footer{
+    display: flex;
+}
+
+#footer-title{
+    margin-left: 50px;
+    font-size: larger;
+}
+
+.footer-item{
+    display: block;
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+.social-media{
+    height: 40px;
+}
+
+.name{
+    color: white;
+}
+
+
+
+    </style>
+</head>
+<body>
+    
+    <section id="hero-section">
+        <nav>
+            <a href="/"><img src="assests/room-assets/logo.png" id="logo"></a>
+
+               <ul class="menu-extra">
+                <li class="menu-item">
+                    <span class="name">{{user.firstName}}&nbsp{{user.lastName}}&nbsp</span>
+                </li>
+                <li class="menu-item">
+                    <button onclick="location.href='/logout'" id="login">Logout</button>                    
+                </li>
+            </ul>
+            
+        </nav>
+    </section>
+
+    <section id="room-list">
+        {{#each rooms}}
+        <div class="video">
+                <img class="thumbnail" src="{{this.image}}">
+                {{!-- <div class="thumbnail">{{this.image}}</div> --}}
+                <div class="info">
+                    <p class="name">{{this.title}}</p>
+                    <p class="stats">${{this.price}}</p>
+                    <p class="creator">
+                        <span> {{this.username}}</span>
+                    </p>                    
+                    <p class="desc">{{this.description}}</p>                        
+                </div>                
+            </div>
+        {{/each}}
+
+    </section>
+
+    <div id="footer-title">
+        Social Media links
+    </div>
+    <section class="footer">
+
+        <div class="footer-item">
+            <button onclick="location.href='https://www.facebook.com/airbnb'"><img src="assests/facebook.png" class="social-media"> </button> 
+        </div>
+        <div class="footer-item">
+            <button onclick="location.href='https://twitter.com/airbnb'"><img src="assests/twitter.png" class="social-media"></button>
+        </div>
+        <div class="footer-item">
+            <button onclick="location.href='https://www.instagram.com/airbnb/'"><img src="assests/instagram.png" class="social-media"></button>
+        </div>
+    </section>
+</body>
+</html>
