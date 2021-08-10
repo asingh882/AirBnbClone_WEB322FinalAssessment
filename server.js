@@ -270,6 +270,7 @@ app.post("/register-user", (req, res) => {
       }
     });
 });
+
 app.post("/register-admin", (req, res) => {
     let name = req.body.firstName + ' ' + req.body.lastName;
     admin.findOne({username: req.body.username}, (err, doc) => {
