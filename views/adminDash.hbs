@@ -341,9 +341,19 @@ a:hover{
                     <label class="input-name">Price</label>
                     <input class="input-val" type="text" name="price" placeholder="$$$$">
                 </div>
+                <script>
+                    function encodeImageFileAsURL(element) {
+                        var file = element.files[0];
+                        var reader = new FileReader();
+                        reader.onloadend = function() {
+                            console.log('RESULT', reader.result)
+                        }   
+                        reader.readAsDataURL(file);
+                    }
+                </script>
                 <div class="search-item">
                     <label class="input-name">Room Image</label>
-                    <input class="input-val" type="file" name="image"/>
+                    <input class="input-val" type="file" name="image" onchange="encodeImageFileAsURL(this)"/>
                 </div>
                 <li class="search">
                     <button class="allign"><img id="search-button" src="../assests/adminDash/submit.png"></button>    

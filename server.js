@@ -4,7 +4,6 @@
 
 const express=require("express");
 const app=express();
-var multer = require("multer");
 
 const path=require("path");
 const bodyParser = require("body-parser");
@@ -18,6 +17,7 @@ const fileUpload = require('express-fileupload');
 const { resolveSoa } = require("dns");
 const { domainToASCII } = require("url");
 const { json } = require("body-parser");
+
 
 const SALT_WORK_FACTOR = 10;
 
@@ -43,20 +43,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(fileUpload());
 
 
-
-var Storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, __dirname+"/uploads/")
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.fieldname +"_"+Date.now()+path.extname(file.originalname))
-    }
-});
-
-
-var upload = multer({
-  storage: Storage
-})
 
 //Database
 
@@ -87,12 +73,9 @@ var roomInfo = new Schema({
     "description": String,
     "price": String,
     "location": String,
-    "image": 
-    {
-        "data": Buffer,
-        "name": String 
-    }
+    "sImage": String
 });
+
 
 var admin = mongoose.model("Admin", adminInfo);
 
@@ -136,8 +119,8 @@ app.get("/admin-room-list", (req, res) => {
           console.log(`An error occured!`);
         }
         else{
-            docs = docs.map(value => value.toObject());
-            res.render("admin-rooms", {rooms: docs, user: req.session.admin, layout: false});
+              docs = docs.map(value => value.toObject()); 
+              res.render("admin-rooms", {rooms: docs, user: req.session.admin, layout: false});
         }
     });
 });
@@ -334,17 +317,18 @@ app.post("/register-admin", (req, res) => {
 
 app.post("/room-enter", (req, res, next) => {
 
-//  var imageFile=req.files.filename;
 
   const desc = "New Room";
+  var bufferImage = new Buffer.from(req.files.image.data).toString('base64'); 
+
   var obj = {
     userN: req.session.admin.username,
     rTitle: req.body.title,
     rDescription: desc,
     rLocation: req.body.location,
     rPrice: req.body.price,
-    image: req.files.image
-  };
+    image: bufferImage
+  };  
 
   addRoom(obj.userN, obj.rTitle, obj.rDescription, obj.rLocation, obj.rPrice, obj.image);
   res.render("adminDash", { msg: "Room has been added to the list! To add description Go to Manage Lists", user: req.session.admin , layout: false} );
@@ -352,15 +336,19 @@ app.post("/room-enter", (req, res, next) => {
 
 app.post("/create-room", (req, res) => {
 
-  //  var imageFile=req.files.filename;
-  
+    
+
+
+    var bufferImage = new Buffer.from(req.files.image.data).toString('base64'); 
+
+
     var obj = {
       userN: req.session.admin.username,
       rTitle: req.body.Title,
       rDescription: req.body.Description,
       rLocation: req.body.Location,
       rPrice: req.body.Price,
-      image: req.files.image
+      image: bufferImage
     };
     
   
@@ -457,7 +445,7 @@ function addAdmin( user, firstN, lastN, eAddress, mobile, password, dateOfBirth)
     });
 }
 
-function addRoom(userN, rTitle, rDescription, rLocation, rPrice, rImage)
+function addRoom(userN, rTitle, rDescription, rLocation, rPrice, imagestr)
 {
     var newRoom = new room({
       username: userN,
@@ -465,7 +453,7 @@ function addRoom(userN, rTitle, rDescription, rLocation, rPrice, rImage)
       description: rDescription,
       location: rLocation,
       price: rPrice,
-      image: rImage
+      sImage: imagestr
     });
 
     newRoom.save((error) => {

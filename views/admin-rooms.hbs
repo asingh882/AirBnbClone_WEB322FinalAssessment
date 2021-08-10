@@ -105,6 +105,7 @@ div.video {
 /* Video thumbnail */
 img.thumbnail {
     max-width:400px;
+    max-height: 250px;
 }
 
 p.name {
@@ -176,8 +177,8 @@ p.creator {
     <section id="room-list">
         {{#each rooms}}
         <div class="video">
-                <img class="thumbnail" src="{{this.image}}">
-                {{!-- <div class="thumbnail">{{this.image}}</div> --}}
+             <img class="thumbnail" src="data:image/png;base64,{{this.sImage}}">
+            
                 <div class="info">
                     <p class="name">{{this.title}}</p>
                     <p class="stats">${{this.price}}</p>
