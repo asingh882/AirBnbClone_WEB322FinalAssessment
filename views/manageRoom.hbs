@@ -128,6 +128,8 @@ p.creator {
 #footer-title{
     margin-left: 50px;
     font-size: larger;
+    color: black;
+    display: flex;
 }
 
 .footer-item{
@@ -157,13 +159,10 @@ p.creator {
     background-color:#ff4757;;
 }
 
-p.desc{
-    font-size: smaller;
-}
-
-#booked{
+#remove{
     display: flex;
-    color:red;
+    border:1px solid #ff4757;
+    color:black;
     width:fit-content; 
     padding: 5px 10px;
     margin-top: 5vh;
@@ -171,6 +170,9 @@ p.desc{
     line-height: 1.3;
     border-radius: 10px;
     text-decoration:none;
+}
+#remove:hover{
+    background-color:#ff4757;;
 }
 
     </style>
@@ -185,15 +187,6 @@ p.desc{
                         <img src="assests/room-assets/logo.png" id="logo">    
                     </a>
                 </li>
-                {{#if user}}
-                <li class="menu-item">
-                    <span id="host"><b>{{user.firstName}}&nbsp{{user.lastName}}&nbsp</b></span>
-                </li>
-                <li class="menu-item">
-                    <button id="login" onclick="location.href='/logout'" >Logout</button>                    
-                </li>
-                {{else}}
-    
                 <li class="menu-item">
                     <a href="sign-up-admin" id="host"><b>Become a host</b></a>
                 </li>
@@ -203,11 +196,11 @@ p.desc{
                 <li class="menu-item">
                     <button id="login" onclick="location.href='/sign-up'" >Sign up</button>                    
                 </li>
-                {{/if}}
             </ul>
         </nav>
     </section>
     <section id="room-list">
+    
         {{#each rooms}}
         <div class="video">
                 <img class="thumbnail" src="data:image/png;base64,{{this.sImage}}">
@@ -217,13 +210,11 @@ p.desc{
                     <p class="stats">${{this.price}}</p>
                     <p class="creator">
                         <span> {{this.username}}</span>
-                    </p>                    
-                    <p class="desc">{{this.description}}</p> 
-                    {{#if this.booked}} 
-                        <p id="booked">This room is booked</p>
-                    {{else}}
-                        <a id="manage" href="/book-room/{{this._id}}">Book this room</a>    
-                    {{/if}}                  
+                    </p>          
+                    <p class="desc">{{this.description}}</p>                        
+                    <a id="manage" href="/edit-room/{{this._id}}">Edit</a>
+                    <a id="remove" href="/delete-room/{{this._id}}">Remove</a>
+                    
                 </div>                
             </div>
         {{/each}}

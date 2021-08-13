@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-    <link rel="stylesheet" href="styles.css"/>
     {{!-- <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> --}}
     
     <style>
@@ -15,6 +14,7 @@
 }
 
 body {
+    display: flex;
     font-family:"Roboto";
     background-color:#ffffff;
 }
@@ -51,6 +51,7 @@ a{
     background-color: white;
     padding:6px;
     margin:0 auto;
+    margin-top: 10vh;
     margin-bottom:40px;
     width:50vw;    
     display:flex;
@@ -97,15 +98,24 @@ img{
 }
 
 #logo{
-    height: 100px;
-    width: 400px;
-    margin-top: 5vh;
+    display: block;
+    max-width:400px;
+    max-height: 250px;
 }
 
 .error{
     color: red;
     font-size: larger;
     margin-left: 54vh;
+}
+
+#form-s{
+    margin-top: 10vh;
+}
+
+#heading{
+    justify-content: center;
+    display: block;
 }
 
     </style>
@@ -115,40 +125,29 @@ img{
     <header> 
         <a href="/admin-dashboard" class="btn" style="position:fixed; bottom:20px; right:20px;"> 
             < Go Back
-        </a>         
-        <img id="logo" src="/assests/adminDash/logo.png">   <br>
-        <h1> Upload Your Room </h1>            
+        </a>
+        <h1 id="heading"> Room Update </h1>          
+        <img id="logo" src="data:image/png;base64,{{room.sImage}}">   <br>          
     </header>
 
     <div class="register-form">
-        <form id="form-s" name="myForm" action="/create-room" method="POST" enctype="multipart/form-data">
+         
+        <form method="POST" id="form-s" action="/edit/{{room.id}}" enctype="multipart/form-data">
             <!-- @TODO: Put your code here -->
 
             <label> Title of Room </label>
-            <input class="input-val" type="text" name="Title" placeholder="Room Title" required="">
+            <input class="input-val" type="text" name="Title" value="{{room.title}}" placeholder="Room Title" required="">
             
             <label>Description of the Room</label>
-            <textarea class="input-val" rows="4" cols="50" name="Description" placeholder="Describe your room here."></textarea>
+            <textarea class="input-val" rows="4" cols="50" name="Description" placeholder="Describe your room here.">{{room.description}}</textarea>
 
             <label>Price of the Room</label>
-            <input class="input-val" type="text" name="Price" pattern="[0-9]+" minlength="1" maxlength="10" placeholder="$$$$" required="">
-            <label>Room Image</label>
-            <input class="input-val" type="file" name="image" />
-
-            <label class="input-val">Location</label>
-                    <select name="Location" class="input-val" id="days">
-                        <option value="QC">Quebec</option>
-                        <option value="BC">British Columbia</option>
-                        <option value="NB">New Brunswick</option>
-                        <option value="ON">Ontario</option>
-                        <option value="AB">Alberta</option>
-                    </select>
+            <input class="input-val" type="text" name="Price" pattern="[0-9]+" minlength="1" value="{{room.price}}" maxlength="10" placeholder="$$$$" required="">
             
             <button class="btn btn-secondary">Submit</button>
         </form>        
     </div>
 
-    <script src="app.js"></script>
 
 </body>
 </html>

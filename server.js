@@ -73,7 +73,8 @@ var roomInfo = new Schema({
     "description": String,
     "price": String,
     "location": String,
-    "sImage": String
+    "sImage": String, 
+    "booked": Boolean
 });
 
 
@@ -83,6 +84,7 @@ var user = mongoose.model("UserInfo", userInfo);
 
 var room = mongoose.model("Room", roomInfo);
 
+var editID;
 //Routes
 
 function onHttpStart(){
@@ -104,7 +106,7 @@ app.get("/room-list", (req, res) => {
     else
     {
       docs = docs.map(value => value.toObject());
-      res.render("room-list", { rooms: docs, layout: false });
+      res.render("room-list", { rooms: docs, user: req.session.user, layout: false });
     }
   });
 });
@@ -135,12 +137,124 @@ app.get("/sign-in", (req, res) => {
 
 app.get("/admin-login", (req, res) => {
   res.render("adminLogin", { layout: false });
-})
+});
 
 app.get("/create-room", ensureAdmin, (req, res) => {
     res.render("createRoom", { layout: false });
-})
+});
 
+app.get("/manage-room", ensureAdmin, (req, res) => {
+  room.find({ username: req.session.admin.username }, (err, docs) => {
+    if(err)
+    {
+      console.log(`An error occured!`);
+    }
+    else{
+          docs = docs.map(value => value.toObject()); 
+          res.render("manageRoom", {rooms: docs, user: req.session.admin, layout: false});
+    }
+  });
+    
+});
+
+app.get("/edit-room/:id", ensureAdmin, (req, res) => {
+  room.find({_id: req.params.id}, (err, doc) => {
+    if(err)
+      console.log(`An unknown error occured! ${err}`);
+    else
+    { 
+
+        var rdocs = {
+          id: doc[0]._id,
+          title: doc[0].title,
+          description: doc[0].description,
+          price: doc[0].price,
+          location: doc[0].location,
+          sImage: doc[0].sImage
+        };
+        
+        res.render("editRoom", {room: rdocs, user: req.session.admin, layout: false});
+    }
+  })
+   
+});
+
+app.get("/delete-room/:id", ensureAdmin, (req, res) => {
+    room.deleteOne( {_id: req.params.id}, (err, doc) => {
+      if(err)
+        console.log(`An unknown error occured!`);
+      else
+        res.redirect("/admin-dashboard");
+    })
+});
+
+app.post("/edit/:id", ensureAdmin, (req, res) => {
+  room.updateOne({_id: req.params.id}, {$set: {title: req.body.Title, description: req.body.Description, price: req.body.Price}}, (err, response) => {
+        if(err)
+          console.log(`An unknown error occurred! ${err}`);
+        else
+          res.redirect("/admin-dashboard");
+    })
+});
+
+app.get("/book-room/:id", ensureLogin, (req, res) => {
+  room.find({ _id: req.params.id }, (err, doc) => {
+      if(err)
+        console.log(`An error occurred! ${err}`);
+      else
+      {
+        var rdocs = {
+          id: doc[0]._id,
+          title: doc[0].title,
+          description: doc[0].description,
+          price: doc[0].price,
+          location: doc[0].location,
+          sImage: doc[0].sImage,
+          booked: doc[0].booked
+        };
+        
+        res.render("bookRoom", {room: rdocs, user: req.session.user, layout: false});
+      }
+  })  
+});
+
+app.post("/booking/:id", ensureLogin, (req, res) => {
+  room.find({ _id: req.params.id }, (err, doc) => {
+    if(err)
+      console.log(`An error occurred! ${err}`);
+    else
+    {
+      var rdocs = {
+        id: doc[0]._id,
+        title: doc[0].title,
+        description: doc[0].description,
+        price: doc[0].price,
+        location: doc[0].location,
+        sImage: doc[0].sImage,
+        booked: doc[0].booked
+      };
+      const date1 = new Date(req.body.start);
+      const date2 = new Date(req.body.end);
+      const diffTime = Math.abs(date2 - date1);
+      const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      var totalPrice = parseInt(rdocs.price) * totalDays;
+      
+      res.render("bookRoom", { price: totalPrice, days: totalDays, room: rdocs, layout: false });
+    } 
+  })
+});
+
+app.get("/booked/:id", ensureLogin, (req, res) => {
+  room.updateOne({ _id: req.params.id }, { $set: {booked: true}}, (err, response) => {
+    if(err)
+      console.log(`An error occurred! ${err}`);
+    else
+    {
+        res.redirect("/dashboard");
+    }
+  });
+});
 
 app.post("/login-admin", (req, res) => {
   const address = req.body.username;
@@ -202,6 +316,9 @@ app.post("/login", (req, res) => {
                 lastName: doc.lname
               }
               res.redirect("/dashboard");
+          }
+          else{
+            res.render("login", {errorMsg: "Invalid Password!", layout: false});
           }
       }
     });
@@ -356,7 +473,10 @@ app.post("/create-room", (req, res) => {
     addRoom(obj.userN, obj.rTitle, obj.rDescription, obj.rLocation, obj.rPrice, obj.image);
     res.render("adminDash", { msg: "Room has been added to the list! To add description Go to Manage Lists", user: req.session.admin , layout: false} );
  
-  });
+});
+
+
+  
 
 
 //email function
@@ -424,7 +544,7 @@ function addData(firstN, lastN, eAddress, password, dateOfBirth)
 }
 
 
-function addAdmin( user, firstN, lastN, eAddress, mobile, password, dateOfBirth)
+function addAdmin( user, firstN, lastN, eAddress, mobile, password, dateOfBirth )
 {
       var newAdmin = new admin({
         username: user,
@@ -433,7 +553,7 @@ function addAdmin( user, firstN, lastN, eAddress, mobile, password, dateOfBirth)
         fname: firstN,
         lname: lastN,
         pass: password,
-        dob: dateOfBirth,
+        dob: dateOfBirth
       });
 
     newAdmin.save((error) => {
@@ -454,7 +574,8 @@ function addRoom(userN, rTitle, rDescription, rLocation, rPrice, imagestr)
       description: rDescription,
       location: rLocation,
       price: rPrice,
-      sImage: imagestr
+      sImage: imagestr,
+      booked: false
     });
 
     newRoom.save((error) => {
@@ -466,11 +587,15 @@ function addRoom(userN, rTitle, rDescription, rLocation, rPrice, imagestr)
     });
 }
 
-// crypt password
+function parseDate(str) {
+  var mdy = str.split('/');
+  return new Date(mdy[2], mdy[0]-1, mdy[1]);
+}
 
-function hash(password) {
-  return bcrypt.hash(password, 10);
- }
+function datediff(first, second) {
+  return Math.round((second-first)/(1000*60*60*24));
+}
+
 
 
 // start app here

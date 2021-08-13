@@ -309,7 +309,7 @@ a:hover{
                     <a href="/admin-room-list">View all listings</a>
                 </li>
                 <li class="menu-item">
-                    <a href="#">Manage Lists</a>
+                    <a href="/manage-room">Manage Lists</a>
                 </li>
             </ul>
             <ul class="menu-extra">
@@ -339,21 +339,11 @@ a:hover{
                 </div>
                 <div class="search-item">
                     <label class="input-name">Price</label>
-                    <input class="input-val" type="text" name="price" placeholder="$$$$">
+                    <input class="input-val" type="text" name="price" pattern="[0-9]" placeholder="$$$$">
                 </div>
-                <script>
-                    function encodeImageFileAsURL(element) {
-                        var file = element.files[0];
-                        var reader = new FileReader();
-                        reader.onloadend = function() {
-                            console.log('RESULT', reader.result)
-                        }   
-                        reader.readAsDataURL(file);
-                    }
-                </script>
                 <div class="search-item">
                     <label class="input-name">Room Image</label>
-                    <input class="input-val" type="file" name="image" onchange="encodeImageFileAsURL(this)"/>
+                    <input class="input-val" type="file" name="image"/>
                 </div>
                 <li class="search">
                     <button class="allign"><img id="search-button" src="../assests/adminDash/submit.png"></button>    
