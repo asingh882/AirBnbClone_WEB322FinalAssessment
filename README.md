@@ -1,5 +1,5 @@
 # WEB322 Final Assessment
-# https://airbnbclonebyme.herokuapp.com/ :- heroku app link
+# https://airbnb-clone-882.nn.r.appspot.com/ :- app link
 #
 # Airbnb clone
 #
